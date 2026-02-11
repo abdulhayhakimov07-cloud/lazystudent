@@ -9,7 +9,7 @@
         body { margin: 0; font-family: 'Montserrat', sans-serif; background: #fff0f3; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
         .box { background: white; padding: 30px; border-radius: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); text-align: center; width: 90%; max-width: 400px; }
         h2 { color: #ff4d6d; font-size: 20px; margin-bottom: 20px; }
-        .btn { display: block; width: 100%; padding: 15px; margin: 10px 0; border: 2px solid #ffccd5; border-radius: 12px; background: white; cursor: pointer; transition: 0.2s; font-size: 15px; }
+        .btn { display: block; width: 100%; padding: 15px; margin: 10px 0; border: 2px solid #ffccd5; border-radius: 12px; background: white; cursor: pointer; transition: 0.2s; font-size: 15px; text-align: center; line-height: 1.4; }
         .btn:hover { background: #ff4d6d; color: white; border-color: #ff4d6d; }
         .progress { font-size: 12px; color: #aaa; margin-top: 15px; }
     </style>
@@ -26,24 +26,23 @@
 
 <script>
     const BOT_TOKEN = '8211315141:AAE4LdiULgg5PwfNXLIJCYHGGu9lmjzL6qs';
-    const MY_ID = '7721602830'; // SHU YERGA O'Z ID-INGIZNI YOZING
+    const MY_ID = '7721602830'; 
 
     let currentStep = 0;
     
-    // Savollar ro'yxati (18 yoshli qizlarbop)
     const quizData = [
         { q: "Ertalab turganda birinchi nima qilasiz?", a: ["Telefon titaman 📱", "Yana uxlayman 😴", "O'zimni habitlarim bor","Yuz-qo'limni yuvaman 🧼"], d: "Ertalabki odati:" },
         { q: "Choymi yoki kofe?", a: ["Kofe manmani ☕", "Choy bo'lsa bo'ldi 🍵", "Suv ichaman 💧"], d: "Ichimlik tanlovi: " },
         { q: "Zerikkaningizda nima qilasiz?", a: ["Tik-Tok/Instagram 🤳", "Kitob o'qiyman","Kino ko'raman 🍿", "Uxlayman 💤"], d: "Zerikkandagi ishi: " },
         { q: "Qaysi fasl sizniki?", a: ["Bahor (hamma yoq yashil) 🌱", "Yoz (issiq va mazzza) ☀️", "Kuz (estetika) 🍂", "Qish (qor va bayram) ❄️"], d: "Yoqtirgan fasli: " },
-        { q: "Shirinlikmi yoki achchiq ovqat?", a: ["Shirinlik (shokoladlar) 🍫", "Osh/Shashlik (achchiq) 🍖", "Fast food 🍕","Farqi yoq",], d: "Taom yo'nalishi: " },
+        { q: "Shirinlikmi yoki achchiq ovqat?", a: ["Shirinlik (shokoladlar) 🍫", "Osh/Shashlik (achchiq) 🍖", "Fast food 🍕","Farqi yoq"], d: "Taom yo'nalishi: " },
         { q: "Sizga qanaqa sovg'alar yoqadi?", a: ["Kutilmagan syurprizlar 🎁", "Gullar 💐", "Foydali narsalar 👜","Yoqmaydi"], d: "Sovg'a didi: " },
         { q: "Dengizga borishni xohlarmidingiz?", a: ["Orzuim! 🌊", "Tog' yaxshiroq 🏔", "Uyda o'tirgan yaxshi 🏠"], d: "Sayohat orzusi: " },
         { q: "Kiyinish uslubingiz?", a: ["Klassika (ko'ylaklar) 👗", "Sport (hudi/krossovka) 👟", "Modaga qarab 👠"], d: "Kiyinish uslubi: " },
         { q: "Yolg'izlik yoqadimi?", a: ["Ha, tinchlik kerak 🧘‍♀️","Ba'zan yoqadi", "Yo'q, hamma bilan bo'lishi kerak "], d: "Xarakteri: " },
         { q: "O'qishmi yoki ish?", a: ["O'qish kerak 📚", "Ishlab pul topish 💸", "Ikkalasi ham ✌️"], d: "Maqsadi: " },
-        { q: "Kinooo: Komediyami yoki ,Thriller,Drama,Meladrama yo ujas?", a: ["Kulish kerak! 😂", "Qo'rqinchli bo'lsin 👻", "Drama (yig'lash uchun) 😢"], d: "Kino javob: " },
-        {q:"Shu paytgacha nechta kitob oqib yubordizzz",a:["Aniq bilmiman","10 ta atrofida","10-50 ta atrofida","100 ta atrofida man kitoboy man"],d:"kitob so'rovi:"},
+        { q: "Kino: Komediya, Thriller, Drama, Melodrama yo Ujas?", a: ["Kulish kerak! 😂", "Qo'rqinchli bo'lsin 👻", "Drama (yig'lash uchun) 😢"], d: "Kino javob: " },
+        { q: "Shu paytgacha nechta kitob o'qib yubordizzz?", a: ["Aniq bilmiman","10 ta atrofida","10-50 ta atrofida","100 ta atrofida"], d: "Kitob so'rovi:" },
         { q: "Oxirgi savol: Bugun kayfiyatingiz qanday?", a: ["Zo'r! ✨", "Charchadim 😴","O'rtacha 😶"], d: "Hozirgi holati: " }
     ];
 
@@ -57,12 +56,16 @@
             document.getElementById('question').innerText = data.q;
             document.getElementById('step-info').innerText = `${currentStep + 1} / ${quizData.length}`;
             
-            let html = "";
+            let optionsDiv = document.getElementById('options');
+            optionsDiv.innerHTML = "";
+            
             data.a.forEach(option => {
-                // ⚡ Shu qator tuzatildi — JSON.stringify ishlatildi
-                html += `<button class="btn" onclick="sendAndNext(${JSON.stringify(option)})">${option}</button>`;
+                let btn = document.createElement('button');
+                btn.className = 'btn';
+                btn.innerText = option;
+                btn.onclick = function() { sendAndNext(option); };
+                optionsDiv.appendChild(btn);
             });
-            document.getElementById('options').innerHTML = html;
         } else {
             finish();
         }
@@ -70,18 +73,25 @@
 
     function sendAndNext(answer) {
         let desc = quizData[currentStep].d;
+        const text = `📌 ${desc} ${answer}`;
+        
         // Telegramga yuborish
-        const text = encodeURIComponent(`📌 ${desc} ${answer}`);
-        fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${MY_ID}&text=${text}`);
-
-        currentStep++;
-        showQuestion();
+        fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${MY_ID}&text=${encodeURIComponent(text)}`)
+        .then(() => {
+            currentStep++;
+            showQuestion();
+        })
+        .catch(err => {
+            console.error("Xatolik:", err);
+            currentStep++;
+            showQuestion();
+        });
     }
 
     function finish() {
         document.getElementById('content').innerHTML = `
-            <h2>Rahmat! ✨</h2>
-            <p>Barcha javoblarni belgiladingiz. h_abdulhay kuningiz yaxshi o'tsin deb yubordi</p>
+            <h2 style="color: #ff4d6d">Rahmat! ✨</h2>
+            <p>Barcha javoblarni belgiladingiz. Kuningiz yaxshi o'tsin!</p>
         `;
     }
 </script>
