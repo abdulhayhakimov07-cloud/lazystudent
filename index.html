@@ -59,7 +59,8 @@
             
             let html = "";
             data.a.forEach(option => {
-                html += `<button class="btn" onclick="sendAndNext('${option}')">${option}</button>`;
+                // ⚡ Shu qator tuzatildi — JSON.stringify ishlatildi
+                html += `<button class="btn" onclick="sendAndNext(${JSON.stringify(option)})">${option}</button>`;
             });
             document.getElementById('options').innerHTML = html;
         } else {
