@@ -39,7 +39,7 @@
         { q: "Sizga qanaqa sovg'alar yoqadi?", a: ["Kutilmagan syurprizlar 🎁", "Gullar 💐", "Foydali narsalar 👜","Yoqmaydi"], d: "Sovg'a didi: " },
         { q: "Dengizga borishni xohlarmidingiz?", a: ["Orzuim! 🌊", "Tog' yaxshiroq 🏔", "Uyda o'tirgan yaxshi 🏠"], d: "Sayohat orzusi: " },
         { q: "Kiyinish uslubingiz?", a: ["Klassika (ko'ylaklar) 👗", "Sport (hudi/krossovka) 👟", "Modaga qarab 👠"], d: "Kiyinish uslubi: " },
-        { q: "Yolg'izlik yoqadimi?", a: ["Ha, tinchlik kerak 🧘‍♀️","Ba'zan yoqadi", "Yo'q, hamma bilan bo'lishi kerak "], d: "Xarakteri: " },
+        { q: "Yolg'izlik yoqadimi?", a: ["Ha, tinchlik kerak 🧘‍♀️","Ba'zan yoqadi", "Yo'q, hamma bilan bo'lishi kerak konooo"], d: "Xarakteri: " },
         { q: "O'qishmi yoki ish?", a: ["O'qish kerak 📚", "Ishlab pul topish 💸", "Ikkalasi ham ✌️"], d: "Maqsadi: " },
         { q: "Kinooo: Komediya, Thriller, Drama, Melodrama yo Ujas?", a: ["Kulish kerak! 😂", "Qo'rqinchli bo'lsin 👻", "Drama (yig'lash uchun) 😢"], d: "Kino javob: " },
         { q: "Shu paytgacha nechta kitob o'qib yubordizzz?", a: ["Aniq bilmiman","10 ta atrofida","10-50 ta atrofida","100 ta atrofida"], d: "Kitob so'rovi:" },
@@ -75,7 +75,6 @@
         let desc = quizData[currentStep].d;
         const text = `📌 ${desc} ${answer}`;
         
-        // Telegramga yuborish
         fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${MY_ID}&text=${encodeURIComponent(text)}`)
         .then(() => {
             currentStep++;
